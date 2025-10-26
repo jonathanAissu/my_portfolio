@@ -1,0 +1,29 @@
+[build]
+  publish = "/"
+  
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Content-Security-Policy = "default-src 'self' 'unsafe-inline' 'unsafe-eval' *.formspree.io *.cloudfront.net *.netlify.app fonts.googleapis.com fonts.gstatic.com cdnjs.cloudflare.com cdn.jsdelivr.net unpkg.com; img-src 'self' data: blob: *.cloudfront.net *.netlify.app; media-src 'self' data: blob: *.cloudfront.net *.netlify.app;"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[build.processing]
+  skip_processing = false
+[build.processing.css]
+  bundle = true
+  minify = true
+[build.processing.js]
+  bundle = true
+  minify = true
+[build.processing.html]
+  pretty_urls = true
+[build.processing.images]
+  compress = true
