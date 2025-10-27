@@ -8,7 +8,7 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Content-Security-Policy = "default-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.formspree.io *.cloudfront.net *.netlify.app fonts.googleapis.com fonts.gstatic.com cdnjs.cloudflare.com cdn.jsdelivr.net unpkg.com; connect-src 'self' https://*.formspree.io; form-action 'self' https://*.formspree.io; img-src 'self' data: blob: *.cloudfront.net *.netlify.app; media-src 'self' data: blob: *.cloudfront.net *.netlify.app;"
+    Content-Security-Policy = "default-src 'self' 'unsafe-inline' 'unsafe-eval' https://formspree.io https://*.formspree.io *.cloudfront.net *.netlify.app fonts.googleapis.com fonts.gstatic.com cdnjs.cloudflare.com cdn.jsdelivr.net unpkg.com; connect-src 'self' https://formspree.io https://*.formspree.io; form-action 'self' https://formspree.io https://*.formspree.io; img-src 'self' data: blob: *.cloudfront.net *.netlify.app; media-src 'self' data: blob: *.cloudfront.net *.netlify.app;"
 
 [[redirects]]
   from = "/*"
