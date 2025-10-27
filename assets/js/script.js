@@ -1,26 +1,20 @@
-// Main JavaScript File
-document.addEventListener('DOMContentLoaded', () => {
-    // Initialize AOS (Animate On Scroll)
+// Initialize AOS (Animate On Scroll)
+function initializeAOS() {
     AOS.init({
         duration: 800,
         easing: 'ease',
         once: true,
         offset: 100
     });
-
-    // Initialize components
-    initializeScrolling();
-    initializeNavbar();
-    initializeContactForm();
-});
+}
 
 // Smooth scrolling for navigation links
 function initializeScrolling() {
     // Navigation links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
+            var target = document.querySelector(this.getAttribute('href'));
             if (target) {
                 window.scrollTo({
                     top: target.offsetTop - 70,
@@ -31,9 +25,9 @@ function initializeScrolling() {
     });
 
     // Scroll to top button
-    const scrollTopBtn = document.getElementById('scrollToTop');
+    var scrollTopBtn = document.getElementById('scrollToTop');
     if (scrollTopBtn) {
-        window.addEventListener('scroll', () => {
+        window.addEventListener('scroll', function() {
             if (window.pageYOffset > 300) {
                 scrollTopBtn.classList.add('visible');
             } else {
@@ -41,7 +35,7 @@ function initializeScrolling() {
             }
         });
 
-        scrollTopBtn.addEventListener('click', () => {
+        scrollTopBtn.addEventListener('click', function() {
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
@@ -52,9 +46,9 @@ function initializeScrolling() {
 
 // Navbar behavior
 function initializeNavbar() {
-    const navbar = document.querySelector('.navbar');
+    var navbar = document.querySelector('.navbar');
     if (navbar) {
-        window.addEventListener('scroll', () => {
+        window.addEventListener('scroll', function() {
             if (window.scrollY > 50) {
                 navbar.style.padding = '0.5rem 0';
             } else {
@@ -64,16 +58,29 @@ function initializeNavbar() {
     }
 }
 
+// Show form message helper function
+function showFormMessage(element, type, message) {
+    element.className = 'alert alert-' + type + ' mt-3';
+    element.innerHTML = '<i class="fas fa-' + (type === 'success' ? 'check' : 'exclamation') + '-circle me-2"></i>' + message;
+    element.classList.remove('d-none');
+
+    if (type === 'success') {
+        setTimeout(function() {
+            element.classList.add('d-none');
+        }, 5000);
+    }
+}
+
 // Contact form handling
 function initializeContactForm() {
-    const contactForm = document.getElementById('contactForm');
-    const formStatus = document.getElementById('form-status');
+    var contactForm = document.getElementById('contactForm');
+    var formStatus = document.getElementById('form-status');
 
     if (!contactForm || !formStatus) return;
 
     // Check URL parameters for form submission status
-    const urlParams = new URLSearchParams(window.location.search);
-    const message = urlParams.get('message');
+    var urlParams = new URLSearchParams(window.location.search);
+    var message = urlParams.get('message');
     
     if (message === 'success') {
         showFormMessage(formStatus, 'success', 'Thank you! Your message has been sent successfully.');
@@ -84,10 +91,10 @@ function initializeContactForm() {
     }
 
     // Handle form submission
-    contactForm.addEventListener('submit', (e) => {
-        const submitButton = contactForm.querySelector('button[type="submit"]');
-        const buttonText = submitButton.querySelector('.button-text');
-        const spinner = submitButton.querySelector('.spinner-border');
+    contactForm.addEventListener('submit', function(e) {
+        var submitButton = contactForm.querySelector('button[type="submit"]');
+        var buttonText = submitButton.querySelector('.button-text');
+        var spinner = submitButton.querySelector('.spinner-border');
         
         submitButton.disabled = true;
         buttonText.textContent = 'Sending...';
@@ -95,15 +102,10 @@ function initializeContactForm() {
     });
 }
 
-// Helper function to show form messages
-function showFormMessage(element, type, message) {
-    element.className = `alert alert-${type} mt-3`;
-    element.innerHTML = `<i class="fas fa-${type === 'success' ? 'check' : 'exclamation'}-circle me-2"></i>${message}`;
-    element.classList.remove('d-none');
-
-    if (type === 'success') {
-        setTimeout(() => {
-            element.classList.add('d-none');
-        }, 5000);
-    }
-}
+// Initialize everything when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    initializeAOS();
+    initializeScrolling();
+    initializeNavbar();
+    initializeContactForm();
+});
