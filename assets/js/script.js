@@ -39,9 +39,11 @@ scrollTopBtn.addEventListener('click', () => {
 });
 
 // Contact form handling
-document.addEventListener('DOMContentLoaded', function() {
+const handleContactForm = () => {
     const contactForm = document.getElementById('contactForm');
     const formStatus = document.getElementById('form-status');
+
+    if (!contactForm || !formStatus) return;
 
     // Check URL parameters for form submission status
     const urlParams = new URLSearchParams(window.location.search);
@@ -51,28 +53,27 @@ document.addEventListener('DOMContentLoaded', function() {
         formStatus.className = 'alert alert-success mt-3';
         formStatus.innerHTML = '<i class="fas fa-check-circle me-2"></i>Thank you! Your message has been sent successfully.';
         formStatus.classList.remove('d-none');
-        // Clear success parameter from URL
         window.history.replaceState({}, document.title, window.location.pathname);
     } else if (message === 'error') {
         formStatus.className = 'alert alert-danger mt-3';
         formStatus.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Sorry, there was a problem sending your message. Please try again.';
         formStatus.classList.remove('d-none');
-        // Clear error parameter from URL
         window.history.replaceState({}, document.title, window.location.pathname);
     }
 
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            const submitButton = contactForm.querySelector('button[type="submit"]');
-            const buttonText = submitButton.querySelector('.button-text');
-            const spinner = submitButton.querySelector('.spinner-border');
-            
-            // Show loading state
-            submitButton.disabled = true;
-            buttonText.textContent = 'Sending...';
-            spinner.classList.remove('d-none');
-        });
-    }
+    contactForm.addEventListener('submit', (e) => {
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+        const buttonText = submitButton.querySelector('.button-text');
+        const spinner = submitButton.querySelector('.spinner-border');
+        
+        submitButton.disabled = true;
+        buttonText.textContent = 'Sending...';
+        spinner.classList.remove('d-none');
+    });
+};
+
+// Initialize form handling when DOM is loaded
+document.addEventListener('DOMContentLoaded', handleContactForm);
 });
             buttonText.textContent = 'Send Message';
             spinner.classList.add('d-none');
