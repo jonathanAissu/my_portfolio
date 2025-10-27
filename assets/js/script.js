@@ -38,68 +38,42 @@ scrollTopBtn.addEventListener('click', () => {
     });
 });
 
-// Form submission handling
-const contactForm = document.getElementById('contactForm');
-const formStatus = document.getElementById('form-status');
+// Contact form handling
+document.addEventListener('DOMContentLoaded', function() {
+    const contactForm = document.getElementById('contactForm');
+    const formStatus = document.getElementById('form-status');
 
-if (contactForm) {
-    contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        // Get form elements
-        const submitButton = contactForm.querySelector('button[type="submit"]');
-        const buttonText = submitButton.querySelector('.button-text');
-        const spinner = submitButton.querySelector('.spinner-border');
-        
-        // Show loading state
-        submitButton.disabled = true;
-        buttonText.textContent = 'Sending...';
-        spinner.classList.remove('d-none');
-        formStatus.classList.add('d-none');
-        
-        // Prepare form data
-        const formData = new FormData(contactForm);
-        const data = {};
-        formData.forEach((value, key) => data[key] = value);
-        
-        try {
-            const response = await fetch('https://formspree.io/f/xgvpvada', {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json',
-                    'Origin': window.location.origin
-                },
-                mode: 'cors',
-                credentials: 'omit'
-            });
+    // Check URL parameters for form submission status
+    const urlParams = new URLSearchParams(window.location.search);
+    const message = urlParams.get('message');
+    
+    if (message === 'success') {
+        formStatus.className = 'alert alert-success mt-3';
+        formStatus.innerHTML = '<i class="fas fa-check-circle me-2"></i>Thank you! Your message has been sent successfully.';
+        formStatus.classList.remove('d-none');
+        // Clear success parameter from URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+    } else if (message === 'error') {
+        formStatus.className = 'alert alert-danger mt-3';
+        formStatus.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Sorry, there was a problem sending your message. Please try again.';
+        formStatus.classList.remove('d-none');
+        // Clear error parameter from URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            const submitButton = contactForm.querySelector('button[type="submit"]');
+            const buttonText = submitButton.querySelector('.button-text');
+            const spinner = submitButton.querySelector('.spinner-border');
             
-            let result;
-            try {
-                result = await response.json();
-            } catch (e) {
-                console.error('Error parsing response:', e);
-                result = {};
-            }
-            
-            if (response.ok) {
-                // Success message
-                formStatus.className = 'alert alert-success mt-3';
-                formStatus.innerHTML = '<i class="fas fa-check-circle me-2"></i>Thank you! Your message has been sent successfully.';
-                contactForm.reset();
-            } else {
-                // Error from server
-                throw new Error(result.error || 'Form submission failed');
-            }
-        } catch (error) {
-            // Network or other error
-            formStatus.className = 'alert alert-danger mt-3';
-            formStatus.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>' + 
-                                 (error.message || 'An error occurred. Please try again later.');
-            console.error('Form submission error:', error);
-        } finally {
-            // Reset button state
-            submitButton.disabled = false;
+            // Show loading state
+            submitButton.disabled = true;
+            buttonText.textContent = 'Sending...';
+            spinner.classList.remove('d-none');
+        });
+    }
+});
             buttonText.textContent = 'Send Message';
             spinner.classList.add('d-none');
             formStatus.classList.remove('d-none');
