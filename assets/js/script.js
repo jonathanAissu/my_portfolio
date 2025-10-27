@@ -161,7 +161,6 @@ function initializeContactForm() {
         }
     });
 }
-}
 
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
