@@ -78,6 +78,17 @@ function initializeContactForm() {
 
     if (!contactForm || !formStatus) return;
 
+    // Function to reset form state
+    function resetFormState() {
+        var submitButton = contactForm.querySelector('button[type="submit"]');
+        var buttonText = submitButton.querySelector('.button-text');
+        var spinner = submitButton.querySelector('.spinner-border');
+        
+        submitButton.disabled = false;
+        buttonText.textContent = 'Send Message';
+        spinner.classList.add('d-none');
+    }
+
     // Check URL parameters for form submission status
     var urlParams = new URLSearchParams(window.location.search);
     var message = urlParams.get('message');
@@ -85,10 +96,16 @@ function initializeContactForm() {
     if (message === 'success') {
         showFormMessage(formStatus, 'success', 'Thank you! Your message has been sent successfully.');
         window.history.replaceState({}, document.title, window.location.pathname);
+        contactForm.reset();
+        resetFormState();
     } else if (message === 'error') {
         showFormMessage(formStatus, 'danger', 'Sorry, there was a problem sending your message. Please try again.');
         window.history.replaceState({}, document.title, window.location.pathname);
+        resetFormState();
     }
+
+    // Always ensure form is in reset state on page load
+    resetFormState();
 
     // Handle form submission
     contactForm.addEventListener('submit', function(e) {
