@@ -278,26 +278,26 @@
             <div class="row justify-content-center">
                 <div class="col-lg-8" data-aos="fade-up">
                     <h2 class="section-title text-center mb-5">Get In Touch</h2>
-                    <form id="contactForm" class="contact-form" action="https://formspree.io/f/xgvpvada" method="POST">
-                        <input type="hidden" name="_next" value="https://jonathanaissu.com/?message=success">
-                        <input type="hidden" name="_error" value="https://jonathanaissu.com/?message=error">
+                    <form id="contactForm" class="contact-form" action="https://formspree.io/f/xgvpvada" method="POST" autocomplete="off">
+                        <input type="hidden" name="_next" value="https://jonathanaissu.com/?message=success#contact">
+                        <input type="hidden" name="_error" value="https://jonathanaissu.com/?message=error#contact">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required>
+                            <input type="text" class="form-control contact-input" id="name" name="name" placeholder="Your Name" required>
                             <label for="name">Your Name</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Your Email" required>
+                            <input type="email" class="form-control contact-input" id="email" name="email" placeholder="Your Email" required>
                             <label for="email">Your Email</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <textarea class="form-control" id="message" name="message" placeholder="Your Message" style="height: 150px" required></textarea>
+                            <textarea class="form-control contact-input" id="message" name="message" placeholder="Your Message" style="height: 150px" required></textarea>
                             <label for="message">Your Message</label>
                         </div>
                         <!-- Honeypot field to prevent spam -->
                         <input type="text" name="_gotcha" style="display: none">
                         <input type="hidden" name="_subject" value="New Contact from Portfolio - Jonathan Aissu">
                         <div id="form-status" class="alert d-none"></div>
-                        <button type="submit" id="submitButton" class="btn btn-primary btn-lg w-100">
+                        <button type="submit" id="submitButton" class="btn btn-primary btn-lg w-100" data-submit-text="Send Message" data-sending-text="Sending...">
                             <span class="button-text">Send Message</span>
                             <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                         </button>

@@ -77,53 +77,90 @@ function initializeContactForm() {
     var formStatus = document.getElementById('form-status');
     var submitButton = document.getElementById('submitButton');
     
-    if (!contactForm || !formStatus || !submitButton) return;
-    
+    if (!contactForm || !formStatus || !submitButton) {
+        console.error('Required form elements not found');
+        return;
+    }
+
+    // Cache button elements and text
     var buttonText = submitButton.querySelector('.button-text');
     var spinner = submitButton.querySelector('.spinner-border');
+    var defaultText = submitButton.dataset.submitText || 'Send Message';
+    var sendingText = submitButton.dataset.sendingText || 'Sending...';
 
-    function setSubmitState(isSubmitting) {
-        if (isSubmitting) {
-            submitButton.disabled = true;
-            buttonText.textContent = 'Sending...';
-            spinner.classList.remove('d-none');
-        } else {
+    // Reset all form elements to initial state
+    function resetForm() {
+        // Reset form fields
+        contactForm.reset();
+        
+        // Reset all inputs manually
+        document.querySelectorAll('.contact-input').forEach(function(input) {
+            input.value = '';
+        });
+
+        // Reset button state
+        submitButton.disabled = false;
+        buttonText.textContent = defaultText;
+        spinner.classList.add('d-none');
+        
+        // Clear any status messages
+        formStatus.className = 'alert d-none';
+        formStatus.textContent = '';
+    }
+
+    function handleFormState(state, message) {
+        if (state === 'success') {
+            resetForm();
+            showFormMessage(formStatus, 'success', message);
+            // Remove URL parameters but keep the hash for scrolling
+            var hash = window.location.hash;
+            window.history.replaceState({}, document.title, window.location.pathname + hash);
+        } else if (state === 'error') {
             submitButton.disabled = false;
-            buttonText.textContent = 'Send Message';
+            buttonText.textContent = defaultText;
             spinner.classList.add('d-none');
+            showFormMessage(formStatus, 'danger', message);
+            // Keep form data in case user wants to try again
+        } else {
+            resetForm();
         }
     }
 
-    function handleFormSubmission(e) {
-        setSubmitState(true);
-    }
-
+    // Check URL parameters on page load
     function checkFormStatus() {
         var urlParams = new URLSearchParams(window.location.search);
         var message = urlParams.get('message');
         
         if (message === 'success') {
-            showFormMessage(formStatus, 'success', 'Thank you! Your message has been sent successfully.');
-            contactForm.reset();
-            setSubmitState(false);
-            window.history.replaceState({}, document.title, window.location.pathname);
+            handleFormState('success', 'Thank you! Your message has been sent successfully.');
         } else if (message === 'error') {
-            showFormMessage(formStatus, 'danger', 'Sorry, there was a problem sending your message. Please try again.');
-            setSubmitState(false);
-            window.history.replaceState({}, document.title, window.location.pathname);
+            handleFormState('error', 'Sorry, there was a problem sending your message. Please try again.');
         } else {
-            setSubmitState(false);
+            handleFormState('reset');
         }
     }
 
-    // Initialize form state
-    setSubmitState(false);
-    
-    // Check status on page load
+    // Handle form submission
+    function handleFormSubmission(e) {
+        submitButton.disabled = true;
+        buttonText.textContent = sendingText;
+        spinner.classList.remove('d-none');
+    }
+
+    // Initialize form
+    resetForm();
     checkFormStatus();
 
-    // Add form submission handler
+    // Add event listeners
     contactForm.addEventListener('submit', handleFormSubmission);
+
+    // Add reset handler for when user navigates back
+    window.addEventListener('pageshow', function(event) {
+        if (event.persisted) {
+            resetForm();
+        }
+    });
+}
 }
 
 // Initialize everything when DOM is loaded
