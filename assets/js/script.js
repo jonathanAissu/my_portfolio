@@ -63,19 +63,20 @@ if (contactForm) {
         formData.forEach((value, key) => data[key] = value);
         
         try {
-            const response = await fetch(contactForm.action, {
+            const response = await fetch('https://formspree.io/f/xgvpvada', {
                 method: 'POST',
                 body: formData,
                 headers: {
                     'Accept': 'application/json'
-                }
+                },
+                mode: 'cors'
             });
             
             let result;
             try {
                 result = await response.json();
             } catch (e) {
-                // If response cannot be parsed as JSON
+                console.error('Error parsing response:', e);
                 result = {};
             }
             
