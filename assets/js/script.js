@@ -65,10 +65,9 @@ if (contactForm) {
         try {
             const response = await fetch(contactForm.action, {
                 method: 'POST',
-                body: JSON.stringify(data),
+                body: formData,
                 headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Accept': 'application/json'
                 }
             });
             
