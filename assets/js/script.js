@@ -75,48 +75,55 @@ function showFormMessage(element, type, message) {
 function initializeContactForm() {
     var contactForm = document.getElementById('contactForm');
     var formStatus = document.getElementById('form-status');
-
-    if (!contactForm || !formStatus) return;
-
-    // Function to reset form state
-    function resetFormState() {
-        var submitButton = contactForm.querySelector('button[type="submit"]');
-        var buttonText = submitButton.querySelector('.button-text');
-        var spinner = submitButton.querySelector('.spinner-border');
-        
-        submitButton.disabled = false;
-        buttonText.textContent = 'Send Message';
-        spinner.classList.add('d-none');
-    }
-
-    // Check URL parameters for form submission status
-    var urlParams = new URLSearchParams(window.location.search);
-    var message = urlParams.get('message');
+    var submitButton = document.getElementById('submitButton');
     
-    if (message === 'success') {
-        showFormMessage(formStatus, 'success', 'Thank you! Your message has been sent successfully.');
-        window.history.replaceState({}, document.title, window.location.pathname);
-        contactForm.reset();
-        resetFormState();
-    } else if (message === 'error') {
-        showFormMessage(formStatus, 'danger', 'Sorry, there was a problem sending your message. Please try again.');
-        window.history.replaceState({}, document.title, window.location.pathname);
-        resetFormState();
+    if (!contactForm || !formStatus || !submitButton) return;
+    
+    var buttonText = submitButton.querySelector('.button-text');
+    var spinner = submitButton.querySelector('.spinner-border');
+
+    function setSubmitState(isSubmitting) {
+        if (isSubmitting) {
+            submitButton.disabled = true;
+            buttonText.textContent = 'Sending...';
+            spinner.classList.remove('d-none');
+        } else {
+            submitButton.disabled = false;
+            buttonText.textContent = 'Send Message';
+            spinner.classList.add('d-none');
+        }
     }
 
-    // Always ensure form is in reset state on page load
-    resetFormState();
+    function handleFormSubmission(e) {
+        setSubmitState(true);
+    }
 
-    // Handle form submission
-    contactForm.addEventListener('submit', function(e) {
-        var submitButton = contactForm.querySelector('button[type="submit"]');
-        var buttonText = submitButton.querySelector('.button-text');
-        var spinner = submitButton.querySelector('.spinner-border');
+    function checkFormStatus() {
+        var urlParams = new URLSearchParams(window.location.search);
+        var message = urlParams.get('message');
         
-        submitButton.disabled = true;
-        buttonText.textContent = 'Sending...';
-        spinner.classList.remove('d-none');
-    });
+        if (message === 'success') {
+            showFormMessage(formStatus, 'success', 'Thank you! Your message has been sent successfully.');
+            contactForm.reset();
+            setSubmitState(false);
+            window.history.replaceState({}, document.title, window.location.pathname);
+        } else if (message === 'error') {
+            showFormMessage(formStatus, 'danger', 'Sorry, there was a problem sending your message. Please try again.');
+            setSubmitState(false);
+            window.history.replaceState({}, document.title, window.location.pathname);
+        } else {
+            setSubmitState(false);
+        }
+    }
+
+    // Initialize form state
+    setSubmitState(false);
+    
+    // Check status on page load
+    checkFormStatus();
+
+    // Add form submission handler
+    contactForm.addEventListener('submit', handleFormSubmission);
 }
 
 // Initialize everything when DOM is loaded
