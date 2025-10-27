@@ -1,45 +1,71 @@
-// Initialize AOS (Animate On Scroll)
-AOS.init({
-    duration: 800,
-    easing: 'ease',
-    once: true,
-    offset: 100
+// Main JavaScript File
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize AOS (Animate On Scroll)
+    AOS.init({
+        duration: 800,
+        easing: 'ease',
+        once: true,
+        offset: 100
+    });
+
+    // Initialize components
+    initializeScrolling();
+    initializeNavbar();
+    initializeContactForm();
 });
 
 // Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
+function initializeScrolling() {
+    // Navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                window.scrollTo({
+                    top: target.offsetTop - 70,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Scroll to top button
+    const scrollTopBtn = document.getElementById('scrollToTop');
+    if (scrollTopBtn) {
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
             window.scrollTo({
-                top: target.offsetTop - 70,
+                top: 0,
                 behavior: 'smooth'
             });
-        }
-    });
-});
-
-// Scroll to top button functionality
-const scrollTopBtn = document.getElementById('scrollToTop');
-
-window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 300) {
-        scrollTopBtn.classList.add('visible');
-    } else {
-        scrollTopBtn.classList.remove('visible');
+        });
     }
-});
+}
 
-scrollTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-});
+// Navbar behavior
+function initializeNavbar() {
+    const navbar = document.querySelector('.navbar');
+    if (navbar) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.style.padding = '0.5rem 0';
+            } else {
+                navbar.style.padding = '1rem 0';
+            }
+        });
+    }
+}
 
 // Contact form handling
-const handleContactForm = () => {
+function initializeContactForm() {
     const contactForm = document.getElementById('contactForm');
     const formStatus = document.getElementById('form-status');
 
@@ -50,17 +76,14 @@ const handleContactForm = () => {
     const message = urlParams.get('message');
     
     if (message === 'success') {
-        formStatus.className = 'alert alert-success mt-3';
-        formStatus.innerHTML = '<i class="fas fa-check-circle me-2"></i>Thank you! Your message has been sent successfully.';
-        formStatus.classList.remove('d-none');
+        showFormMessage(formStatus, 'success', 'Thank you! Your message has been sent successfully.');
         window.history.replaceState({}, document.title, window.location.pathname);
     } else if (message === 'error') {
-        formStatus.className = 'alert alert-danger mt-3';
-        formStatus.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Sorry, there was a problem sending your message. Please try again.';
-        formStatus.classList.remove('d-none');
+        showFormMessage(formStatus, 'danger', 'Sorry, there was a problem sending your message. Please try again.');
         window.history.replaceState({}, document.title, window.location.pathname);
     }
 
+    // Handle form submission
     contactForm.addEventListener('submit', (e) => {
         const submitButton = contactForm.querySelector('button[type="submit"]');
         const buttonText = submitButton.querySelector('.button-text');
@@ -70,52 +93,17 @@ const handleContactForm = () => {
         buttonText.textContent = 'Sending...';
         spinner.classList.remove('d-none');
     });
-};
-
-// Initialize form handling when DOM is loaded
-document.addEventListener('DOMContentLoaded', handleContactForm);
-});
-            buttonText.textContent = 'Send Message';
-            spinner.classList.add('d-none');
-            formStatus.classList.remove('d-none');
-            
-            // Smooth scroll to status message
-            const yOffset = -100; // Offset to account for fixed header
-            const y = formStatus.getBoundingClientRect().top + window.pageYOffset + yOffset;
-            window.scrollTo({top: y, behavior: 'smooth'});
-            
-            // Hide status message after 5 seconds if it's a success message
-            if (formStatus.classList.contains('alert-success')) {
-                setTimeout(() => {
-                    formStatus.classList.add('d-none');
-                }, 5000);
-            }
-        }
-    });
 }
 
-// Navbar scroll behavior
-const navbar = document.querySelector('.navbar');
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-        navbar.style.padding = '0.5rem 0';
-    } else {
-        navbar.style.padding = '1rem 0';
+// Helper function to show form messages
+function showFormMessage(element, type, message) {
+    element.className = `alert alert-${type} mt-3`;
+    element.innerHTML = `<i class="fas fa-${type === 'success' ? 'check' : 'exclamation'}-circle me-2"></i>${message}`;
+    element.classList.remove('d-none');
+
+    if (type === 'success') {
+        setTimeout(() => {
+            element.classList.add('d-none');
+        }, 5000);
     }
-});
-
-// Initialize Bootstrap tooltips
-const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-const tooltipList = tooltipTriggerList.map((tooltipTriggerEl) => {
-    return new bootstrap.Tooltip(tooltipTriggerEl);
-});
-
-// Project modal image gallery (if needed)
-document.querySelectorAll('.project-gallery-img').forEach(img => {
-    img.addEventListener('click', function() {
-        const modalImg = this.getAttribute('data-full-img');
-        const modal = new bootstrap.Modal(document.getElementById('imageModal'));
-        document.getElementById('modalImage').src = modalImg;
-        modal.show();
-    });
-});
+}
