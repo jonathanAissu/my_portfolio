@@ -20,6 +20,13 @@ function initializeScrolling() {
                     top: target.offsetTop - 70,
                     behavior: 'smooth'
                 });
+                
+                // Collapse navbar on mobile after clicking
+                var navbarCollapse = document.querySelector('.navbar-collapse');
+                var navbarToggler = document.querySelector('.navbar-toggler');
+                if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+                    navbarToggler.click();
+                }
             }
         });
     });
