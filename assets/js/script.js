@@ -51,11 +51,36 @@ function initializeNavbar() {
         window.addEventListener('scroll', function() {
             if (window.scrollY > 50) {
                 navbar.style.padding = '0.5rem 0';
+                navbar.classList.add('scrolled');
             } else {
                 navbar.style.padding = '1rem 0';
+                navbar.classList.remove('scrolled');
             }
         });
     }
+}
+
+// Animated Skill Bars
+function initializeSkillBars() {
+    var skillItems = document.querySelectorAll('.skill-item');
+    
+    var observerOptions = {
+        threshold: 0.5,
+        rootMargin: '0px'
+    };
+    
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+    
+    skillItems.forEach(function(item) {
+        observer.observe(item);
+    });
 }
 
 // Show form message helper function
@@ -112,6 +137,7 @@ function initializeContactForm() {
         if (state === 'success') {
             resetForm();
             showFormMessage(formStatus, 'success', message);
+            createConfetti(); // Trigger confetti animation
             // Remove URL parameters but keep the hash for scrolling
             var hash = window.location.hash;
             window.history.replaceState({}, document.title, window.location.pathname + hash);
@@ -164,8 +190,134 @@ function initializeContactForm() {
 
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
+    initializePreloader();
+    initializeScrollProgress();
     initializeAOS();
     initializeScrolling();
     initializeNavbar();
+    initializeSkillBars();
+    initializeStatsCounter();
     initializeContactForm();
+    initializeFormValidation();
 });
+
+// 1. Preloader
+function initializePreloader() {
+    var preloader = document.getElementById('preloader');
+    if (preloader) {
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                preloader.classList.add('fade-out');
+                setTimeout(function() {
+                    preloader.style.display = 'none';
+                }, 500);
+            }, 1000);
+        });
+    }
+}
+
+// 2. Scroll Progress Indicator
+function initializeScrollProgress() {
+    var progressBar = document.querySelector('.scroll-progress');
+    if (!progressBar) return;
+    
+    window.addEventListener('scroll', function() {
+        var windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        var scrolled = (window.pageYOffset / windowHeight) * 100;
+        progressBar.style.width = scrolled + '%';
+    });
+}
+
+// 4. Statistics Counter Animation
+function initializeStatsCounter() {
+    var statNumbers = document.querySelectorAll('.stat-number');
+    var hasAnimated = false;
+    
+    var observerOptions = {
+        threshold: 0.5
+    };
+    
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting && !hasAnimated) {
+                hasAnimated = true;
+                statNumbers.forEach(function(stat) {
+                    var target = parseInt(stat.getAttribute('data-target'));
+                    var current = 0;
+                    var increment = target / 50;
+                    
+                    var counter = setInterval(function() {
+                        current += increment;
+                        if (current >= target) {
+                            stat.textContent = target + '+';
+                            clearInterval(counter);
+                        } else {
+                            stat.textContent = Math.floor(current) + '+';
+                        }
+                    }, 30);
+                });
+            }
+        });
+    }, observerOptions);
+    
+    if (statNumbers.length > 0) {
+        observer.observe(statNumbers[0].closest('.stats'));
+    }
+}
+
+// 5. Form Validation
+function initializeFormValidation() {
+    var form = document.getElementById('contactForm');
+    if (!form) return;
+    
+    var inputs = form.querySelectorAll('input[required], textarea[required]');
+    
+    inputs.forEach(function(input) {
+        input.addEventListener('blur', function() {
+            validateField(input);
+        });
+        
+        input.addEventListener('input', function() {
+            if (input.classList.contains('is-invalid')) {
+                validateField(input);
+            }
+        });
+    });
+}
+
+function validateField(field) {
+    if (field.value.trim() === '') {
+        field.classList.add('is-invalid');
+        field.classList.remove('is-valid');
+        return false;
+    } else if (field.type === 'email') {
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(field.value)) {
+            field.classList.add('is-invalid');
+            field.classList.remove('is-valid');
+            return false;
+        }
+    }
+    
+    field.classList.remove('is-invalid');
+    field.classList.add('is-valid');
+    return true;
+}
+
+// 6. Success Confetti Animation
+function createConfetti() {
+    var colors = ['#0A1F44', '#1A3A5F', '#2C5F8D', '#4A7BA7'];
+    
+    for (var i = 0; i < 50; i++) {
+        var confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDelay = Math.random() * 2 + 's';
+        document.body.appendChild(confetti);
+        
+        setTimeout(function() {
+            confetti.remove();
+        }, 3000);
+    }
+}
