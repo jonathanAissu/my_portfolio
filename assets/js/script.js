@@ -195,6 +195,31 @@ function initializeContactForm() {
     });
 }
 
+// Review Form Handler
+function initializeReviewForm() {
+    var reviewForm = document.getElementById('reviewForm');
+    if (!reviewForm) return;
+    
+    reviewForm.addEventListener('submit', function(e) {
+        var submitBtn = reviewForm.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Submitting...';
+    });
+    
+    // Check for success message in URL
+    var urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('review') === 'success') {
+        var successAlert = document.getElementById('reviewSuccess');
+        if (successAlert) {
+            successAlert.classList.remove('d-none');
+            reviewForm.reset();
+            setTimeout(function() {
+                successAlert.classList.add('d-none');
+            }, 5000);
+        }
+    }
+}
+
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     initializePreloader();
@@ -206,6 +231,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeStatsCounter();
     initializeContactForm();
     initializeFormValidation();
+    initializeReviewForm();
 });
 
 // 1. Preloader
