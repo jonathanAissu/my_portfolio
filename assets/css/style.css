@@ -43,6 +43,22 @@ body {
     color: #ffffff;
 }
 
+p, .lead {
+    color: #e5e5e5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #ffffff;
+}
+
+.text-muted {
+    color: #b0b0b0 !important;
+}
+
+.bg-light {
+    background-color: #0a0a0a !important;
+}
+
 /* Navigation */
 .navbar {
     transition: var(--transition);
@@ -54,8 +70,9 @@ body {
 }
 
 .navbar.scrolled {
-    background: rgba(255, 255, 255, 0.95) !important;
-    box-shadow: 0 4px 30px rgba(10, 31, 68, 0.15);
+    background: rgba(0, 0, 0, 0.98) !important;
+    box-shadow: 0 4px 30px rgba(165, 180, 252, 0.3);
+    border-bottom: 1px solid rgba(165, 180, 252, 0.3);
 }
 
 .logo-container {
@@ -149,7 +166,7 @@ body {
     font-weight: 900;
     font-size: 4.5rem;
     letter-spacing: -1px;
-    background: linear-gradient(90deg, #ffffff, #a5b4fc, #6b7fcc, #ffffff);
+    background: linear-gradient(90deg, #e5e5e5, #a5b4fc, #6b7fcc, #e5e5e5);
     background-size: 200% auto;
     background-clip: text;
     -webkit-background-clip: text;
@@ -357,7 +374,9 @@ body {
     padding: 5px;
     background: #000000;
     border-radius: 50%;
-    max-width: 80%;
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
     margin: 0 auto;
     display: block;
 }
@@ -416,6 +435,11 @@ body {
 
 .skill-item span {
     font-weight: 500;
+    color: #e5e5e5;
+}
+
+.skill-percent {
+    color: #a5b4fc;
 }
 
 .section-title {
@@ -443,11 +467,11 @@ body {
 /* Services Section */
 .service-card {
     transition: var(--transition);
-    background: linear-gradient(135deg, #ffffff 0%, #fafbff 100%);
+    background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 100%);
     border-radius: 16px;
     overflow: hidden;
     position: relative;
-    border: 1px solid rgba(10, 31, 68, 0.1);
+    border: 1px solid rgba(165, 180, 252, 0.2);
     height: 100%;
 }
 
@@ -614,6 +638,14 @@ body {
 
 .contact-form label {
     color: #b0b0b0;
+}
+
+.contact .text-primary {
+    color: #a5b4fc !important;
+}
+
+.contact p {
+    color: #e5e5e5;
 }
 
 /* Footer */
@@ -810,7 +842,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, #0A1F44, #1A3A5F);
+    background: linear-gradient(135deg, #000000, #0d0d0d);
     z-index: 99999;
     display: flex;
     align-items: center;
@@ -852,7 +884,7 @@ body {
     font-family: 'Playfair Display', serif;
     font-size: 5rem;
     font-weight: 900;
-    background: linear-gradient(135deg, #ffffff, #a5b4fc, #6b7fcc, #ffffff);
+    background: linear-gradient(135deg, #e5e5e5, #a5b4fc, #6b7fcc, #e5e5e5);
     background-size: 200% auto;
     background-clip: text;
     -webkit-background-clip: text;
@@ -1029,17 +1061,19 @@ body {
 }
 
 .github-card {
-    background: white;
+    background: #0d0d0d;
     padding: 1.5rem;
     border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(10, 31, 68, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     transition: var(--transition);
     overflow: hidden;
+    border: 1px solid rgba(165, 180, 252, 0.1);
 }
 
 .github-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 12px 40px rgba(10, 31, 68, 0.15);
+    box-shadow: 0 8px 30px rgba(165, 180, 252, 0.2);
+    border-color: rgba(165, 180, 252, 0.3);
 }
 
 .github-card img {
@@ -1163,8 +1197,8 @@ body {
 }
 
 .tech-badges .badge {
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-    color: white;
+    background: linear-gradient(135deg, #a5b4fc, #6b7fcc);
+    color: #000000;
     padding: 0.4rem 0.8rem;
     border-radius: 20px;
     font-size: 0.75rem;
@@ -1175,52 +1209,340 @@ body {
 /* 8. Testimonials/Reviews Section */
 .review-form-card {
     border: 2px solid rgba(165, 180, 252, 0.2);
-    transition: var(--transition);
-    background: #0d0d0d !important;
+    transition: all 0.4s ease;
+    background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 100%) !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+.review-form-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(165, 180, 252, 0.1), transparent);
+    transition: 0.5s;
+}
+
+.review-form-card:hover::before {
+    left: 100%;
 }
 
 .review-form-card:hover {
     border-color: #a5b4fc;
-    box-shadow: 0 8px 30px rgba(165, 180, 252, 0.3) !important;
+    box-shadow: 0 15px 50px rgba(165, 180, 252, 0.4) !important;
+    transform: translateY(-5px);
+}
+
+.review-form-card .text-center i {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
 }
 
 .rating-input {
     flex-wrap: wrap;
 }
 
-.rating-input .btn-outline-warning {
-    border-color: #FFC107;
-    color: #FFC107;
+.review-form-card h4 {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
 }
 
-.rating-input .btn-check:checked + .btn-outline-warning {
-    background-color: #FFC107;
-    border-color: #FFC107;
-    color: white;
+.review-form-card .form-label {
+    color: #e5e5e5;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.review-form-card .form-label::before {
+    content: '●';
+    color: #a5b4fc;
+    font-size: 0.5rem;
+}
+
+.review-form-card .form-control,
+.review-form-card .form-select {
+    background: rgba(10, 10, 10, 0.8);
+    border: 2px solid rgba(165, 180, 252, 0.2);
+    color: #e5e5e5;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.review-form-card .form-control::placeholder {
+    color: rgba(229, 229, 229, 0.4);
+}
+
+.review-form-card .form-control:focus,
+.review-form-card .form-select:focus {
+    background: #1a1a1a;
+    border-color: #a5b4fc;
+    color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(165, 180, 252, 0.1);
+    transform: translateY(-2px);
+}
+
+.review-form-card .form-select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23a5b4fc' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 16px 12px;
+}
+
+.review-form-card .text-muted {
+    color: #b0b0b0 !important;
+    font-size: 0.85rem;
+}
+
+.review-form-card .text-muted i {
+    color: #a5b4fc;
+}
+
+.review-form-card .btn-primary {
+    background: linear-gradient(135deg, #a5b4fc, #6b7fcc);
+    border: none;
+    box-shadow: 0 5px 20px rgba(165, 180, 252, 0.3);
+    transition: all 0.3s ease;
+}
+
+.review-form-card .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(165, 180, 252, 0.5);
+}
+
+.rating-input .btn-outline-warning {
+    border: 2px solid rgba(255, 193, 7, 0.3);
+    color: #FFC107;
+    background: rgba(255, 193, 7, 0.05);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: 600;
 }
 
 .rating-input .btn-outline-warning:hover {
-    background-color: #FFC107;
+    background: rgba(255, 193, 7, 0.15);
     border-color: #FFC107;
-    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
+}
+
+.rating-input .btn-check:checked + .btn-outline-warning {
+    background: linear-gradient(135deg, #FFC107, #FFB300);
+    border-color: #FFC107;
+    color: #000000;
+    box-shadow: 0 5px 20px rgba(255, 193, 7, 0.5);
+    transform: scale(1.05);
+}
+
+/* 9. Contact Form Enhancements */
+.contact-form {
+    background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 100%);
+    padding: 2.5rem;
+    border-radius: 20px;
+    border: 2px solid rgba(165, 180, 252, 0.2);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    transition: all 0.4s ease;
+}
+
+.contact-form:hover {
+    border-color: #a5b4fc;
+    box-shadow: 0 15px 50px rgba(165, 180, 252, 0.3);
+    transform: translateY(-5px);
+}
+
+.contact-form .form-label {
+    color: #e5e5e5;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.contact-form .form-label::before {
+    content: '●';
+    color: #a5b4fc;
+    font-size: 0.5rem;
+}
+
+.contact-form .form-control {
+    background: rgba(10, 10, 10, 0.8) !important;
+    border: 2px solid rgba(165, 180, 252, 0.2) !important;
+    color: #e5e5e5 !important;
+    padding: 1rem;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+.contact-form .form-control::-webkit-input-placeholder {
+    color: rgba(229, 229, 229, 0.3) !important;
+}
+
+.contact-form .form-control:-moz-placeholder {
+    color: rgba(229, 229, 229, 0.3) !important;
+}
+
+.contact-form .form-control::-moz-placeholder {
+    color: rgba(229, 229, 229, 0.3) !important;
+}
+
+.contact-form .form-control:-ms-input-placeholder {
+    color: rgba(229, 229, 229, 0.3) !important;
+}
+
+.contact-form .form-control::placeholder {
+    color: rgba(229, 229, 229, 0.3);
+}
+
+.contact-form .form-control:focus {
+    background: #1a1a1a !important;
+    border-color: #a5b4fc !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 0 4px rgba(165, 180, 252, 0.1);
+    transform: translateY(-2px);
+}
+
+.contact-form textarea.form-control {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.contact-form .btn-primary {
+    background: linear-gradient(135deg, #a5b4fc, #6b7fcc);
+    border: none;
+    padding: 1rem 2rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-form .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.contact-form .btn-primary:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.contact-form .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(165, 180, 252, 0.5);
+}
+
+.contact-form .btn-primary .button-text,
+.contact-form .btn-primary .spinner-border {
+    position: relative;
+    z-index: 1;
+}
+
+#form-status {
+    border-radius: 10px;
+    animation: slideInUp 0.5s ease;
+    font-weight: 500;
+}
+
+#form-status.alert-success {
+    background: rgba(40, 167, 69, 0.15);
+    border-left: 4px solid #28a745;
+    color: #4ade80;
+}
+
+#form-status.alert-danger {
+    background: rgba(239, 68, 68, 0.15);
+    border-left: 4px solid #ef4444;
+    color: #f87171;
 }
 
 #reviewSuccess {
     border-left: 4px solid #28a745;
+    background: rgba(40, 167, 69, 0.1);
+    border-radius: 10px;
+    animation: slideInUp 0.5s ease;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Contact Info Cards */
+.contact .col-md-4 {
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.contact .col-md-4:hover {
+    transform: translateY(-10px);
+}
+
+.contact .col-md-4 i {
+    transition: all 0.3s ease;
+    color: #a5b4fc;
+}
+
+.contact .col-md-4:hover i {
+    transform: scale(1.2) rotate(10deg);
+    color: #6b7fcc;
+}
+
+.contact .col-md-4 p {
+    color: #e5e5e5;
+    font-weight: 500;
+    margin-top: 0.5rem;
 }
 
 .testimonial-card {
-    background: white;
+    background: #0d0d0d;
     padding: 2rem;
     border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     transition: var(--transition);
     height: 100%;
+    border: 1px solid rgba(165, 180, 252, 0.2);
 }
 
 .testimonial-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 30px rgba(10, 31, 68, 0.15);
+    box-shadow: 0 8px 30px rgba(165, 180, 252, 0.3);
+    border-color: #a5b4fc;
 }
 
 .stars {
@@ -1229,7 +1551,7 @@ body {
 
 .testimonial-text {
     font-style: italic;
-    color: #6b7280;
+    color: #b0b0b0;
     margin-bottom: 1.5rem;
     line-height: 1.8;
 }

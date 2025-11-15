@@ -554,7 +554,9 @@
                 <div class="col-lg-8" data-aos="fade-up">
                     <div class="review-form-card p-4 bg-white rounded shadow-sm">
                         <div class="text-center mb-4">
-                            <i class="fas fa-star fa-3x text-warning mb-3"></i>
+                            <div class="mb-3">
+                                <i class="fas fa-star fa-3x" style="color: #FFC107;"></i>
+                            </div>
                             <h4>Share Your Experience</h4>
                             <p class="text-muted">Have you worked with me? I'd love to hear your feedback!</p>
                         </div>
@@ -565,18 +567,18 @@
                             
                             <div class="row mb-3">
                                 <div class="col-md-6 mb-3 mb-md-0">
-                                    <label for="reviewName" class="form-label">Your Name *</label>
-                                    <input type="text" class="form-control" id="reviewName" name="name" required>
+                                    <label for="reviewName" class="form-label">Your Name</label>
+                                    <input type="text" class="form-control" id="reviewName" name="name" placeholder="John Doe" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="reviewCompany" class="form-label">Company/Organization</label>
-                                    <input type="text" class="form-control" id="reviewCompany" name="company">
+                                    <input type="text" class="form-control" id="reviewCompany" name="company" placeholder="Your Company">
                                 </div>
                             </div>
                             
                             <div class="mb-3">
-                                <label for="reviewEmail" class="form-label">Email Address *</label>
-                                <input type="email" class="form-control" id="reviewEmail" name="email" required>
+                                <label for="reviewEmail" class="form-label">Email Address</label>
+                                <input type="email" class="form-control" id="reviewEmail" name="email" placeholder="john@example.com" required>
                             </div>
                             
                             <div class="mb-3">
@@ -592,43 +594,46 @@
                             </div>
                             
                             <div class="mb-3">
-                                <label class="form-label">Rating *</label>
-                                <div class="rating-input d-flex gap-2">
+                                <label class="form-label">Rating</label>
+                                <div class="rating-input d-flex gap-2 justify-content-center">
                                     <input type="radio" class="btn-check" name="rating" id="star5" value="5" required>
-                                    <label class="btn btn-outline-warning" for="star5">
+                                    <label class="btn btn-outline-warning" for="star5" title="Excellent">
                                         <i class="fas fa-star"></i> 5
                                     </label>
                                     
                                     <input type="radio" class="btn-check" name="rating" id="star4" value="4">
-                                    <label class="btn btn-outline-warning" for="star4">
+                                    <label class="btn btn-outline-warning" for="star4" title="Very Good">
                                         <i class="fas fa-star"></i> 4
                                     </label>
                                     
                                     <input type="radio" class="btn-check" name="rating" id="star3" value="3">
-                                    <label class="btn btn-outline-warning" for="star3">
+                                    <label class="btn btn-outline-warning" for="star3" title="Good">
                                         <i class="fas fa-star"></i> 3
                                     </label>
                                     
                                     <input type="radio" class="btn-check" name="rating" id="star2" value="2">
-                                    <label class="btn btn-outline-warning" for="star2">
+                                    <label class="btn btn-outline-warning" for="star2" title="Fair">
                                         <i class="fas fa-star"></i> 2
                                     </label>
                                     
                                     <input type="radio" class="btn-check" name="rating" id="star1" value="1">
-                                    <label class="btn btn-outline-warning" for="star1">
+                                    <label class="btn btn-outline-warning" for="star1" title="Poor">
                                         <i class="fas fa-star"></i> 1
                                     </label>
                                 </div>
                             </div>
                             
                             <div class="mb-4">
-                                <label for="reviewMessage" class="form-label">Your Review *</label>
+                                <label for="reviewMessage" class="form-label">Your Review</label>
                                 <textarea class="form-control" id="reviewMessage" name="review" rows="5" 
-                                    placeholder="Tell us about your experience working with Jonathan..." required></textarea>
+                                    placeholder="Tell us about your experience working with Jonathan. What did you like most about the project?" required></textarea>
+                                <small class="text-muted d-block mt-1">
+                                    <i class="fas fa-info-circle"></i> Please be detailed and honest in your feedback
+                                </small>
                             </div>
                             
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary btn-lg">
+                                <button type="submit" class="btn btn-primary btn-lg px-5">
                                     <i class="fas fa-paper-plane me-2"></i>Submit Review
                                 </button>
                             </div>
@@ -636,7 +641,7 @@
                         
                         <div id="reviewSuccess" class="alert alert-success mt-4 d-none">
                             <i class="fas fa-check-circle me-2"></i>
-                            Thank you for your review! It will be reviewed and posted soon.
+                            <strong>Thank you!</strong> Your review has been submitted and will be reviewed shortly.
                         </div>
                     </div>
                 </div>
@@ -645,7 +650,7 @@
             <div class="text-center mt-5" data-aos="fade-up">
                 <p class="text-muted">
                     <i class="fas fa-shield-alt me-2"></i>
-                    All reviews are verified before being published
+                    <!-- All reviews are verified before being published -->
                 </p>
             </div>
         </div>
@@ -661,21 +666,25 @@
                         autocomplete="off">
                         <input type="hidden" name="_next" value="https://jonathanaissu.com/?message=success#contact">
                         <input type="hidden" name="_error" value="https://jonathanaissu.com/?message=error#contact">
-                        <div class="form-floating mb-3">
+                        
+                        <div class="mb-4">
+                            <label for="name" class="form-label">Your Name</label>
                             <input type="text" class="form-control contact-input" id="name" name="name"
-                                placeholder="Your Name" required>
-                            <label for="name">Your Name</label>
+                                placeholder="John Doe" required>
                         </div>
-                        <div class="form-floating mb-3">
+                        
+                        <div class="mb-4">
+                            <label for="email" class="form-label">Your Email</label>
                             <input type="email" class="form-control contact-input" id="email" name="email"
-                                placeholder="Your Email" required>
-                            <label for="email">Your Email</label>
+                                placeholder="john@example.com" required>
                         </div>
-                        <div class="form-floating mb-3">
+                        
+                        <div class="mb-4">
+                            <label for="message" class="form-label">Your Message</label>
                             <textarea class="form-control contact-input" id="message" name="message"
-                                placeholder="Your Message" style="height: 150px" required></textarea>
-                            <label for="message">Your Message</label>
+                                placeholder="Tell me about your project or idea..." rows="5" required></textarea>
                         </div>
+                        
                         <!-- Honeypot field to prevent spam -->
                         <input type="text" name="_gotcha" style="display: none">
                         <input type="hidden" name="_subject" value="New Contact from Portfolio - Jonathan Aissu">

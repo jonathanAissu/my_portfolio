@@ -204,6 +204,14 @@ function initializeReviewForm() {
         var submitBtn = reviewForm.querySelector('button[type="submit"]');
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Submitting...';
+        
+        // Store form data before submission
+        setTimeout(function() {
+            // Clear form after a short delay to allow Formspree to process
+            reviewForm.reset();
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Submit Review';
+        }, 1000);
     });
     
     // Check for success message in URL
@@ -213,6 +221,8 @@ function initializeReviewForm() {
         if (successAlert) {
             successAlert.classList.remove('d-none');
             reviewForm.reset();
+            // Clear the URL parameter
+            window.history.replaceState({}, document.title, window.location.pathname);
             setTimeout(function() {
                 successAlert.classList.add('d-none');
             }, 5000);
