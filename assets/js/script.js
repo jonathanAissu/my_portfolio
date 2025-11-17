@@ -254,7 +254,7 @@ function initializePreloader() {
                 setTimeout(function() {
                     preloader.style.display = 'none';
                 }, 500);
-            }, 5000);
+            }, 3000);
         });
     }
 }
